@@ -72,9 +72,6 @@ class SignalElement extends HTMLElement {
 			this.textContent = `${value}`;
 		}
 	}
-	render() {
-		return this._render();
-	}
 	get state() {
 		return this.signal.get();
 	}
