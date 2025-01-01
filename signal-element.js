@@ -50,7 +50,7 @@ function coerce(value) {
 class SignalElement extends HTMLElement {
 	constructor() {
 		super();
-		this.isHTML = this.getAttribute('render') === 'html';
+		this.isHTML = this.getAttribute('render') === 'html' || this.render !== undefined;
 		this.mutation = (state) => state;
 		const initial = this.isHTML
 			? coerce(this.getAttribute('state')) || this.innerHTML
