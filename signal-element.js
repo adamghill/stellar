@@ -56,15 +56,15 @@ class SignalElement extends HTMLElement {
 			? coerce(this.getAttribute('state')) || this.innerHTML
 			: coerce(this.getAttribute('state')) || coerce(this.textContent);
 		this.signal = new Signal.State(initial);
-		this.cleanup = effect(() => this.render());
+		this.cleanup = effect(() => this._render());
 	}
 	connectedCallback() {
-		this.render();
+		this._render();
 	}
 	disconnectedCallback() {
 		this.cleanup();
 	}
-	render() {
+	_render() {
 		const value = this.mutation(this.signal.get());
 		if (this.isHTML) {
 			this.innerHTML = value;
@@ -72,20 +72,23 @@ class SignalElement extends HTMLElement {
 			this.textContent = `${value}`;
 		}
 	}
+	render() {
+		return this._render();
+	}
 	get state() {
 		return this.signal.get();
 	}
 	set state(v) {
 		this.signal.set(v);
 	}
-	set customRenderer(callback) {
+	set render(callback) {
 		this.mutation = callback;
-		this.render();
+		this._render();
 	}
 	set computed(callback) {
 		this.cleanup();
 		this.signal = new Signal.Computed(callback);
-		this.cleanup = effect(() => this.render());
+		this.cleanup = effect(() => this._render());
 	}
 }
 
