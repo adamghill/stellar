@@ -67,11 +67,7 @@ class SignalElement extends HTMLElement {
 	_render() {
 		const value = this.mutation(this.signal.get());
 		if (this.isHTML) {
-			if (this.render !== undefined) {
-				this.setHTMLUnsafe(this.render(value));
-			} else {
-				this.setHTMLUnsafe(value);
-			}
+			this.setHTMLUnsafe(value);
 		} else {
 			this.textContent = `${value}`;
 		}
